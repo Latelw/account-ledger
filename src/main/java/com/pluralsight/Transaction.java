@@ -31,6 +31,15 @@ public class Transaction {
         return amount;
     }
 
+    @Override
+    public String toString() {
+        return date +
+                "|" + time +
+                "|" + description +
+                "|" + vendor +
+                "|" + amount;
+    }
+
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
         this.time = time;
