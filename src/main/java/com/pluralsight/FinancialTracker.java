@@ -41,6 +41,8 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     public static void main(String[] args) {
         loadTransactions(FILE_NAME);
+        System.out.println("Transactions loaded: " + transactions.size());
+
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -79,12 +81,12 @@ public class FinancialTracker {
         File file = new File(fileName);
        try {
            if (!file.exists()) {
-               FileWriter fileWriter = new FileWriter("transactions.csv");
+               FileWriter fileWriter = new FileWriter(fileName);
                fileWriter.close();
 
 
            }
-           BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
+           BufferedReader reader = new BufferedReader(new FileReader(fileName));
            String line;
 
            while ((line = reader.readLine()) != null) {
@@ -100,15 +102,16 @@ public class FinancialTracker {
 
 
 
+
+
+
            }
+           reader.close();
 
        } catch (IOException e) {
            System.out.println("Error found");
        }
 
-        // TODO: create file if it does not exist, then read each line,
-        //       parse the five fields, build a Transaction object,
-        //       and add it to the transactions list.
     }
 
     /* ------------------------------------------------------------------
