@@ -41,7 +41,7 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     public static void main(String[] args) {
         loadTransactions(FILE_NAME);
-        System.out.println("Transactions loaded: " + transactions.size());
+
 
 
         Scanner scanner = new Scanner(System.in);
