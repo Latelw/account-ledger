@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -125,7 +126,49 @@ public class FinancialTracker {
      * Store the amount as-is (positive) and append to the file.
      */
     private static void addDeposit(Scanner scanner) {
-        // TODO
+        //Prompt user for BOTH date and time and hold in a string
+        System.out.println("Enter date and time of deposit: ");
+        String userDateTime = scanner.nextLine();
+        //Use date time formatter provided above
+        LocalDateTime dateTime = LocalDateTime.parse(userDateTime, DATETIME_FMT);
+        //Class calls for date and time separately. Need to extract each
+        LocalDate date = dateTime.toLocalDate();
+
+        LocalTime time = dateTime.toLocalTime();
+
+        //Get the rest of the attributes for transaction
+
+        System.out.println("Enter description: ");
+        String description = scanner.nextLine();
+
+        System.out.println("Enter Vendor: ");
+        String vendor = scanner.nextLine();
+
+        //Verify that the transaction is positive
+
+        double amount = 0;
+
+        while (amount <= 0) {
+
+            System.out.println("Enter the amount: ");
+            amount = Double.parseDouble(scanner.nextLine());
+            //if statement handles the verification to ensure the user is prompted to enter a new amount.
+            if (amount <= 0){
+                System.out.println("Invalid amount. Try Again!");
+            }
+        }
+        Transaction newTransaction = new Transaction(date,time,description,vendor,amount);
+        transactions.add(newTransaction);
+
+        System.out.println("Deposit Successful!");
+
+
+
+
+
+
+
+
     }
 
     /**
