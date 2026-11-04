@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /*
@@ -81,12 +82,6 @@ public class FinancialTracker {
     public static void loadTransactions(String fileName) {
         File file = new File(fileName);
        try {
-           if (!file.exists()) {
-               FileWriter fileWriter = new FileWriter(fileName);
-               fileWriter.close();
-
-
-           }
            BufferedReader reader = new BufferedReader(new FileReader(fileName));
            String line;
 
@@ -243,7 +238,7 @@ public class FinancialTracker {
                 System.out.println("Enter the amount: ");
                 amount = Double.parseDouble(scanner.nextLine());
                 //if statement handles the verification to ensure the user is prompted to enter a new amount.
-                if (amount <= 0) {
+                if (amount >= 0) {
                     System.out.println("Invalid amount. Try Again!");
                 }
             } catch (Exception e) {
@@ -274,6 +269,8 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
+        transactions.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+
         while (running) {
             System.out.println("Ledger");
             System.out.println("Choose an option:");
@@ -299,7 +296,19 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
-    private static void displayLedger() { /* TODO – print all transactions in column format, newest first */ }
+    private static void displayLedger() {
+        for (int i = transactions.size() - 1; i >= 0 ; i--) {
+            Transaction transaction = transactions.get(i);
+
+            System.out.println(transaction.getDate());
+            System.out.println(transaction.getTime());
+            System.out.println(transaction.getDescription());
+            System.out.println(transaction.getVendor());
+            System.out.println(transaction.getAmount());
+
+
+        }
+    }
 
     private static void displayDeposits() { /* TODO – only amount > 0               */ }
 
