@@ -127,19 +127,30 @@ public class FinancialTracker {
      */
     private static void addDeposit(Scanner scanner) {
         //Prompt user for BOTH date and time and hold in a string
-        System.out.println("Enter date and time of deposit: ");
-        String userDateTime = scanner.nextLine();
-        //Use date time formatter provided above
-        LocalDateTime dateTime = LocalDateTime.parse(userDateTime, DATETIME_FMT);
-        //Class calls for date and time separately. Need to extract each
-        LocalDate date = dateTime.toLocalDate();
+        //Added Try catch to protect from incorrect format by user
+       LocalDate date = null;
+       LocalTime time = null;
+        while (date == null || time == null) {
+            try {
+                System.out.println("Enter Date and Time of deposit(yyyy-MM-dd HH:mm:ss): ");
+                String userDateTime = scanner.nextLine();
+                //Use date time formatter provided above
+                LocalDateTime dateTime = LocalDateTime.parse(userDateTime, DATETIME_FMT);
+                //Class calls for date and time separately. Need to extract each
+                date = dateTime.toLocalDate();
 
-        LocalTime time = dateTime.toLocalTime();
+                time = dateTime.toLocalTime();
+            } catch (Exception e) {
+                System.out.println("Error with input. Check format and try again");
+            }
+        }
 
         //Get the rest of the attributes for transaction
-
-        System.out.println("Enter description: ");
-        String description = scanner.nextLine();
+        String description = "";
+        while (description.isEmpty()) {
+            System.out.println("Enter description: ");
+            description = scanner.nextLine();
+        }
 
         System.out.println("Enter Vendor: ");
         String vendor = scanner.nextLine();
@@ -149,18 +160,37 @@ public class FinancialTracker {
         double amount = 0;
 
         while (amount <= 0) {
+            try {
 
-            System.out.println("Enter the amount: ");
-            amount = Double.parseDouble(scanner.nextLine());
-            //if statement handles the verification to ensure the user is prompted to enter a new amount.
-            if (amount <= 0){
-                System.out.println("Invalid amount. Try Again!");
+                System.out.println("Enter the amount: ");
+                amount = Double.parseDouble(scanner.nextLine());
+                //if statement handles the verification to ensure the user is prompted to enter a new amount.
+                if (amount <= 0) {
+                    System.out.println("Invalid amount. Try Again!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Numerical characters only");
             }
         }
         Transaction newTransaction = new Transaction(date,time,description,vendor,amount);
         transactions.add(newTransaction);
 
         System.out.println("Deposit Successful!");
+
+        //Writing to the file (append mode) while maintaining current transactions
+        try {
+            FileWriter writer = new FileWriter(FILE_NAME, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            bufferedWriter.write(newTransaction.toString());
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("File can not be opened.");
+        }
+
+
 
 
 
@@ -177,7 +207,22 @@ public class FinancialTracker {
      * then converted to a negative amount before storing.
      */
     private static void addPayment(Scanner scanner) {
-        // TODO
+        LocalDate date = null;
+        LocalTime time = null;
+        while (date == null || time == null) {
+            try {
+                System.out.println("Enter Date and Time of Payment(yyyy-MM-dd HH:mm:ss): ");
+                String userDateTime = scanner.nextLine();
+                //Use date time formatter provided above
+                LocalDateTime dateTime = LocalDateTime.parse(userDateTime, DATETIME_FMT);
+                //Class calls for date and time separately. Need to extract each
+                date = dateTime.toLocalDate();
+
+                time = dateTime.toLocalTime();
+            } catch (Exception e) {
+                System.out.println("Error with input. Check format and try again");
+            }
+        }
     }
 
     /* ------------------------------------------------------------------
