@@ -37,7 +37,7 @@ public class Transaction {
                 "|" + time +
                 "|" + description +
                 "|" + vendor +
-                "|" + amount;
+                "|" + String.format("%.2f", amount);
     }
 
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {

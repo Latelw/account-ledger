@@ -223,6 +223,50 @@ public class FinancialTracker {
                 System.out.println("Error with input. Check format and try again");
             }
         }
+        //Get the rest of the attributes for transaction
+        String description = "";
+        while (description.isEmpty()) {
+            System.out.println("Enter description: ");
+            description = scanner.nextLine();
+        }
+
+        System.out.println("Enter Vendor: ");
+        String vendor = scanner.nextLine();
+
+        //Verify that the transaction is negative
+
+        double amount = 0;
+
+        while (amount >= 0) {
+            try {
+
+                System.out.println("Enter the amount: ");
+                amount = Double.parseDouble(scanner.nextLine());
+                //if statement handles the verification to ensure the user is prompted to enter a new amount.
+                if (amount <= 0) {
+                    System.out.println("Invalid amount. Try Again!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Numerical characters only");
+            }
+        }
+        Transaction newTransaction = new Transaction(date,time,description,vendor,amount);
+        transactions.add(newTransaction);
+
+        System.out.println("Payment Successful!");
+
+        //Writing to the file (append mode) while maintaining current transactions
+        try {
+            FileWriter writer = new FileWriter(FILE_NAME, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            bufferedWriter.write(newTransaction.toString());
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("File can not be opened.");
+        }
     }
 
     /* ------------------------------------------------------------------
