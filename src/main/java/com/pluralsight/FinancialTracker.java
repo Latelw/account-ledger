@@ -348,7 +348,7 @@ public class FinancialTracker {
                 case "2" -> previousMonth();
                 case "3" -> yearToDate();
                 case "4" -> previousYear();
-                case "5" -> {/* TODO – prompt for vendor then report */ }
+                case "5" -> filterTransactionsByVendor(scanner);
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
                 default -> System.out.println("Invalid option");
@@ -461,8 +461,28 @@ public class FinancialTracker {
 
     }
 
-    private static void filterTransactionsByVendor(String vendor) {
-        // TODO – iterate transactions, print those with matching vendor
+    private static void filterTransactionsByVendor(Scanner scanner) {
+        System.out.println("Enter the name of the Vendor: ");
+        try {
+            String userInput = scanner.nextLine();
+            transactionHeader();
+            for (Transaction transaction : transactions){
+                if (transaction.getVendor().equalsIgnoreCase(userInput)){
+                  statement(transaction);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error. Please try again!");
+        }
+    }
+    private static void statement(Transaction transaction){
+        System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
+                transaction.getDate(),
+                transaction.getTime(),
+                transaction.getDescription()
+                ,transaction.getVendor()
+                ,transaction.getAmount());
+
     }
 
     private static void customSearch(Scanner scanner) {
