@@ -45,7 +45,6 @@ public class FinancialTracker {
         loadTransactions(FILE_NAME);
 
 
-
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -81,32 +80,28 @@ public class FinancialTracker {
      */
     public static void loadTransactions(String fileName) {
         File file = new File(fileName);
-       try {
-           BufferedReader reader = new BufferedReader(new FileReader(fileName));
-           String line;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String line;
 
-           while ((line = reader.readLine()) != null) {
-               String[] transaction = line.split("\\|");
-               LocalDate date = LocalDate.parse(transaction[0]);
-               LocalTime time = LocalTime.parse(transaction[1]);
-               String description = transaction[2];
-               String vendor = transaction[3];
-               double amount = Double.parseDouble(transaction[4]);
+            while ((line = reader.readLine()) != null) {
+                String[] transaction = line.split("\\|");
+                LocalDate date = LocalDate.parse(transaction[0]);
+                LocalTime time = LocalTime.parse(transaction[1]);
+                String description = transaction[2];
+                String vendor = transaction[3];
+                double amount = Double.parseDouble(transaction[4]);
 
-               Transaction newTransaction = new Transaction(date, time, description, vendor,amount);
-               transactions.add(newTransaction);
-
-
+                Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(newTransaction);
 
 
+            }
+            reader.close();
 
-
-           }
-           reader.close();
-
-       } catch (IOException e) {
-           System.out.println("Error found");
-       }
+        } catch (IOException e) {
+            System.out.println("Error found");
+        }
 
     }
 
@@ -123,8 +118,8 @@ public class FinancialTracker {
     private static void addDeposit(Scanner scanner) {
         //Prompt user for BOTH date and time and hold in a string
         //Added Try catch to protect from incorrect format by user
-       LocalDate date = null;
-       LocalTime time = null;
+        LocalDate date = null;
+        LocalTime time = null;
         while (date == null || time == null) {
             try {
                 System.out.println("Enter Date and Time of deposit(yyyy-MM-dd HH:mm:ss): ");
@@ -167,7 +162,7 @@ public class FinancialTracker {
                 System.out.println("Invalid input. Numerical characters only");
             }
         }
-        Transaction newTransaction = new Transaction(date,time,description,vendor,amount);
+        Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
         transactions.add(newTransaction);
 
         System.out.println("Deposit Successful!");
@@ -186,14 +181,6 @@ public class FinancialTracker {
         }
 
 
-
-
-
-
-
-
-
-
     }
 
     /**
@@ -204,6 +191,7 @@ public class FinancialTracker {
     private static void addPayment(Scanner scanner) {
         LocalDate date = null;
         LocalTime time = null;
+
         while (date == null || time == null) {
             try {
                 System.out.println("Enter Date and Time of Payment(yyyy-MM-dd HH:mm:ss): ");
@@ -237,15 +225,13 @@ public class FinancialTracker {
 
                 System.out.println("Enter the amount: ");
                 amount = Double.parseDouble(scanner.nextLine());
+                amount = (amount * -1);
                 //if statement handles the verification to ensure the user is prompted to enter a new amount.
-                if (amount >= 0) {
-                    System.out.println("Invalid amount. Try Again!");
-                }
             } catch (Exception e) {
                 System.out.println("Invalid input. Numerical characters only");
             }
         }
-        Transaction newTransaction = new Transaction(date,time,description,vendor,amount);
+        Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
         transactions.add(newTransaction);
 
         System.out.println("Payment Successful!");
@@ -297,17 +283,16 @@ public class FinancialTracker {
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
     private static void displayLedger() {
-        for (int i = transactions.size() - 1; i >= 0 ; i--) {
-            Transaction transaction = transactions.get(i);
+        //Shows header and creates spacing
+        System.out.printf("%-12s %-10s %-25s %-20s %10s%n",
+                "Date", "Time", "Description", "Vendor", "Amount");
 
-            System.out.println(transaction.getDate());
-            System.out.println(transaction.getTime());
-            System.out.println(transaction.getDescription());
-            System.out.println(transaction.getVendor());
-            System.out.println(transaction.getAmount());
-
+        for (Transaction transaction : transactions) {
+            System.out.printf("%-12s %-10tT %-25s %-20s %10s%n", transaction.getDate(),
+                    transaction.getTime(),transaction.getDescription(), transaction.getVendor(),transaction.getAmount());
 
         }
+
     }
 
     private static void displayDeposits() { /* TODO – only amount > 0               */ }
