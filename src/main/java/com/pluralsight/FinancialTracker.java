@@ -284,8 +284,7 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     private static void displayLedger() {
         //Shows header and creates spacing
-        System.out.printf("%-12s %-10s %-25s %-20s %10s%n",
-                "Date", "Time", "Description", "Vendor", "Amount");
+        transactionHeader();
 
         for (Transaction transaction : transactions) {
             System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n",
@@ -300,8 +299,8 @@ public class FinancialTracker {
     }
 
     private static void displayDeposits() {
-        System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
-                for (Transaction transaction : transactions){
+        transactionHeader();
+        for (Transaction transaction : transactions){
                     if (transaction.getAmount() > 0) {
                         System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n",
                                 transaction.getDate(),
@@ -316,7 +315,7 @@ public class FinancialTracker {
 
 
     private static void displayPayments() {
-        System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+        transactionHeader();
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
                 System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n", transaction.getDate(), transaction.getTime()
@@ -346,7 +345,7 @@ public class FinancialTracker {
 
             switch (input) {
                 case "1" -> { monthToDate();}
-                case "2" -> {/* TODO – previous month report */ }
+                case "2" -> {previousMonth(); }
                 case "3" -> {/* TODO – year-to-date report   */ }
                 case "4" -> {/* TODO – previous year report  */ }
                 case "5" -> {/* TODO – prompt for vendor then report */ }
@@ -368,7 +367,8 @@ public class FinancialTracker {
 
         System.out.println("Month to Date Report: ");
 
-        System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+        transactionHeader();
+
         //Cycle through the array to check the dates
         for (Transaction transaction : transactions){
 
@@ -388,6 +388,34 @@ public class FinancialTracker {
 
 
     }
+    private static void previousMonth(){
+        LocalDate today = LocalDate.now();
+        //Isolate first day of the previous month by going back one month while including the first day after
+        LocalDate firstDayOfMonth = today.minusMonths(1).withDayOfMonth(1);
+        //Isolate first day of current month and then subtract a day to find the last day of previous month
+        LocalDate lastDayOfMonth = today.withDayOfMonth(1).minusDays(1);
+
+        System.out.println("Previous Month Report: ");
+        transactionHeader();
+
+        for (Transaction transaction : transactions){
+            //Transaction date is not before the first day of the previous month and not after the last day of the previous month, print the transaction
+            if (!transaction.getDate().isBefore(firstDayOfMonth) && !transaction.getDate().isAfter(lastDayOfMonth)){
+                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription()
+                        ,transaction.getVendor()
+                        ,transaction.getAmount());
+            }
+        }
+
+
+    }
+    private static void transactionHeader(){
+        System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+
+    }
 
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         // TODO – iterate transactions, print those within the range
@@ -403,16 +431,4 @@ public class FinancialTracker {
         //        vendor, and exact amount, then display matches
     }
 
-    /* ------------------------------------------------------------------
-       Utility parsers (you can reuse in many places)
-       ------------------------------------------------------------------ */
-    private static LocalDate parseDate(String s) {
-        /* TODO – return LocalDate or null */
-        return null;
-    }
-
-    private static Double parseDouble(String s) {
-        /* TODO – return Double   or null */
-        return null;
-    }
 }
