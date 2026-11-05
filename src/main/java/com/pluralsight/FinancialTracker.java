@@ -288,16 +288,35 @@ public class FinancialTracker {
                 "Date", "Time", "Description", "Vendor", "Amount");
 
         for (Transaction transaction : transactions) {
-            System.out.printf("%-12s %-10tT %-25s %-20s %10s%n", transaction.getDate(),
+            System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n", transaction.getDate(),
                     transaction.getTime(),transaction.getDescription(), transaction.getVendor(),transaction.getAmount());
 
         }
 
     }
 
-    private static void displayDeposits() { /* TODO – only amount > 0               */ }
+    private static void displayDeposits() {
+        System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+                for (Transaction transaction : transactions){
+                    if (transaction.getAmount() > 0) {
+                        System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n", transaction.getDate(), transaction.getTime()
+                                , transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                    }
+                }
 
-    private static void displayPayments() { /* TODO – only amount < 0               */ }
+        }
+
+
+    private static void displayPayments() {
+        System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n", transaction.getDate(), transaction.getTime()
+                        , transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            }
+        }
+    }
+
 
     /* ------------------------------------------------------------------
        Reports menu
