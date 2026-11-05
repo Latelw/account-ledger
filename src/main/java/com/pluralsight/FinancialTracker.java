@@ -344,10 +344,10 @@ public class FinancialTracker {
             String input = scanner.nextLine().trim();
 
             switch (input) {
-                case "1" -> { monthToDate();}
-                case "2" -> {previousMonth(); }
-                case "3" -> {/* TODO – year-to-date report   */ }
-                case "4" -> {/* TODO – previous year report  */ }
+                case "1" -> monthToDate();
+                case "2" -> previousMonth();
+                case "3" -> yearToDate();
+                case "4" -> previousYear();
                 case "5" -> {/* TODO – prompt for vendor then report */ }
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
@@ -412,11 +412,50 @@ public class FinancialTracker {
 
 
     }
+
+    private static void yearToDate(){
+        LocalDate today = LocalDate.now();
+        LocalDate firstDay = today.withDayOfYear(1);
+        System.out.println("YTD Report: ");
+        transactionHeader();
+
+        for (Transaction transaction : transactions){
+            if (!transaction.getDate().isBefore(firstDay) && !transaction.getDate().isAfter(today)){
+                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription()
+                        ,transaction.getVendor()
+                        ,transaction.getAmount());
+            }
+        }
+    }
+    private static void previousYear(){
+        LocalDate today = LocalDate.now();
+        //identifies first day of the previous year
+        LocalDate firstDayOfYear = today.minusYears(1).withDayOfYear(1);
+        //Today's year>First day of this year>Last day of last year
+        LocalDate lastDayOfYear = today.withDayOfYear(1).minusDays(1);
+
+        System.out.println("Previous Year Report: ");
+        transactionHeader();
+
+        for (Transaction transaction : transactions){
+            if (!transaction.getDate().isBefore(firstDayOfYear) && !transaction.getDate().isAfter(lastDayOfYear)){
+                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription()
+                        ,transaction.getVendor()
+                        ,transaction.getAmount());
+
+            }
+        }
+    }
     private static void transactionHeader(){
         System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
 
     }
-
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         // TODO – iterate transactions, print those within the range
 
