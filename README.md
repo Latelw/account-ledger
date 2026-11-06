@@ -50,7 +50,7 @@
 1. Clone this repository, or download it as a zip and unzip it.
 2. In IntelliJ: File > Open, pick the project folder (the one that holds `pom.xml`), press Open.
 3. Wait for IntelliJ to finish indexing (progress bar at the bottom).
-4. Open `src/main/java/com/pluralsight/YourMainClassName.java`. <!-- replace YourMainClassName with the class that has main -->
+4. Open `src/main/java/com/pluralsight/FinancialTracker.java`. <!-- replace YourMainClassName with the class that has main -->
 5. Right-click inside the file and choose Run 'YourMainClassName.main()'.
 
 ### Data and configuration
