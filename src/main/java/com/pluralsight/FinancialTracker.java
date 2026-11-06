@@ -287,12 +287,7 @@ public class FinancialTracker {
         transactionHeader();
 
         for (Transaction transaction : transactions) {
-            System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n",
-                    transaction.getDate(),
-                    transaction.getTime(),
-                    transaction.getDescription(),
-                    transaction.getVendor(),
-                    transaction.getAmount());
+            statement(transaction);
 
         }
 
@@ -300,18 +295,13 @@ public class FinancialTracker {
 
     private static void displayDeposits() {
         transactionHeader();
-        for (Transaction transaction : transactions){
-                    if (transaction.getAmount() > 0) {
-                        System.out.printf("%-12s %-10tT %-25s %-20s $%9.2f%n",
-                                transaction.getDate(),
-                                transaction.getTime(),
-                                transaction.getDescription(),
-                                transaction.getVendor(),
-                                transaction.getAmount());
-                    }
-                }
-
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                statement(transaction);
+            }
         }
+
+    }
 
 
     private static void displayPayments() {
@@ -370,25 +360,20 @@ public class FinancialTracker {
         transactionHeader();
 
         //Cycle through the array to check the dates
-        for (Transaction transaction : transactions){
+        for (Transaction transaction : transactions) {
 
             if (!transaction.getDate().isBefore(firstDayOfMonth) && !transaction.getDate().isAfter(currentDate)) {
 
                 //Format output of transactions
-                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
-                        transaction.getDate(),
-                        transaction.getTime(),
-                        transaction.getDescription()
-                        ,transaction.getVendor()
-                        ,transaction.getAmount());
+                statement(transaction);
 
             }
         }
 
 
-
     }
-    private static void previousMonth(){
+
+    private static void previousMonth() {
         LocalDate today = LocalDate.now();
         //Isolate first day of the previous month by going back one month while including the first day after
         LocalDate firstDayOfMonth = today.minusMonths(1).withDayOfMonth(1);
@@ -398,39 +383,30 @@ public class FinancialTracker {
         System.out.println("Previous Month Report: ");
         transactionHeader();
 
-        for (Transaction transaction : transactions){
+        for (Transaction transaction : transactions) {
             //Transaction date is not before the first day of the previous month and not after the last day of the previous month, print the transaction
-            if (!transaction.getDate().isBefore(firstDayOfMonth) && !transaction.getDate().isAfter(lastDayOfMonth)){
-                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
-                        transaction.getDate(),
-                        transaction.getTime(),
-                        transaction.getDescription()
-                        ,transaction.getVendor()
-                        ,transaction.getAmount());
+            if (!transaction.getDate().isBefore(firstDayOfMonth) && !transaction.getDate().isAfter(lastDayOfMonth)) {
+                statement(transaction);
             }
         }
 
 
     }
 
-    private static void yearToDate(){
+    private static void yearToDate() {
         LocalDate today = LocalDate.now();
         LocalDate firstDay = today.withDayOfYear(1);
         System.out.println("YTD Report: ");
         transactionHeader();
 
-        for (Transaction transaction : transactions){
-            if (!transaction.getDate().isBefore(firstDay) && !transaction.getDate().isAfter(today)){
-                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
-                        transaction.getDate(),
-                        transaction.getTime(),
-                        transaction.getDescription()
-                        ,transaction.getVendor()
-                        ,transaction.getAmount());
+        for (Transaction transaction : transactions) {
+            if (!transaction.getDate().isBefore(firstDay) && !transaction.getDate().isAfter(today)) {
+                statement(transaction);
             }
         }
     }
-    private static void previousYear(){
+
+    private static void previousYear() {
         LocalDate today = LocalDate.now();
         //identifies first day of the previous year
         LocalDate firstDayOfYear = today.minusYears(1).withDayOfYear(1);
@@ -440,22 +416,19 @@ public class FinancialTracker {
         System.out.println("Previous Year Report: ");
         transactionHeader();
 
-        for (Transaction transaction : transactions){
-            if (!transaction.getDate().isBefore(firstDayOfYear) && !transaction.getDate().isAfter(lastDayOfYear)){
-                System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
-                        transaction.getDate(),
-                        transaction.getTime(),
-                        transaction.getDescription()
-                        ,transaction.getVendor()
-                        ,transaction.getAmount());
+        for (Transaction transaction : transactions) {
+            if (!transaction.getDate().isBefore(firstDayOfYear) && !transaction.getDate().isAfter(lastDayOfYear)) {
+                statement(transaction);
 
             }
         }
     }
-    private static void transactionHeader(){
+
+    private static void transactionHeader() {
         System.out.printf("%-12s %-10s %-25s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
 
     }
+
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         // TODO – iterate transactions, print those within the range
 
@@ -466,22 +439,33 @@ public class FinancialTracker {
         try {
             String userInput = scanner.nextLine();
             transactionHeader();
-            for (Transaction transaction : transactions){
-                if (transaction.getVendor().equalsIgnoreCase(userInput)){
-                  statement(transaction);
+
+            boolean found = false;
+            while (!found) {
+            for (Transaction transaction : transactions) {
+                if (transaction.getVendor().equalsIgnoreCase(userInput)) {
+                    statement(transaction);
+                    found = true;
+
                 }
             }
+            if (!found) {
+                System.out.println("No results found");
+                break;
+            }
+        }
         } catch (Exception e) {
             System.out.println("Error. Please try again!");
         }
     }
-    private static void statement(Transaction transaction){
+
+    private static void statement(Transaction transaction) {
         System.out.printf("%-12s %-10s %-25s %-20s %9.2f%n",
                 transaction.getDate(),
                 transaction.getTime(),
                 transaction.getDescription()
-                ,transaction.getVendor()
-                ,transaction.getAmount());
+                , transaction.getVendor()
+                , transaction.getAmount());
 
     }
 
