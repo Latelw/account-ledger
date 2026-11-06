@@ -1,29 +1,26 @@
 # Project Title
+  Account Ledger Capstone #1
 
-<!-- One sentence under the title: what the app is, for whom.
-     Example: A console app that keeps a store's inventory in a csv file and lets a clerk search it. -->
-     A account ledger app that keeps transaction data in a csv file and allows the user to filter their search.
+     AN account ledger app that keeps transaction data in a csv file and allows the user to filter their search.
 
 ## Description of the Project
 
-<!-- Three to five sentences. What the application does, who uses it, what problem it solves.
-     Write it for someone who has never seen the workbook: a recruiter, a classmate, you in six months. -->
      This application is made for a user to store transaction history. It primarily documents transactions onto a file,
      and recovers the information stored in the csv file. It also gives the user access to the information via specific
      filters to allow them to see the transactions in a specific time frame.
 
-![Class Diagram](images/class-diagram.png)
+
 
 ## Features
 
 -Add a deposit
 -Make a payment
 -Display Ledger
--->Show all transactions
+→Show all transactions
  -Show ONLY deposits
  -Show ONLY payments
 -Display Reports
--->Month to Date Report
+→Month to Date Report
  -Previous Month Report
  -Year to Date Report
  -Previous Year Report
@@ -122,20 +119,13 @@ delete transactions.
 -
 
 ## Resources
-
-<!-- What helped you: the workbook, the week's hub pages, a tutorial, a documentation page. Real links. -->
-
 - Java YearUp Fall 2026 hub: <https://raymaroun.github.io/yearup-java-fall2026/>
--
+-https://raymaroun.github.io/yearup-java-fall2026/week-04/reference/demo-day.html
 
 ## Author
 
-<!-- Your name and, if you like, your GitHub profile link. For a team workshop, one line per person with what each one built. -->
-
-- **Your Name**
+- Latel Williams Jr
 
 ## Thanks
 
-<!-- Optional. The people who helped: the instructor, a classmate who debugged with you, a mentor. -->
-
-- Thank you to ... for ...
+- Thank you to Raymound and PGH Software Dorm for support throughout this project.
