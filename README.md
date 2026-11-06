@@ -7,7 +7,7 @@
      need one, delete the whole section, heading included. Every other section stays. -->
 
 <!-- One sentence under the title: what the app is, for whom.
-     Example: A console app that keeps a store's inventory in a csv file and lets a clerk search it. -->
+     Example: A console app that keeps a store's inventory in a csv file and lets a clerk search it. --> Account Ledger
 
 ## Description of the Project
 
@@ -16,13 +16,6 @@
 This application is made for a user to store transaction history. It primarily documents transactions onto a file,
 and recovers the information stored in the csv file. It also gives the user access to the information via specific
 filters to allow them to see the transactions in a specific time frame.
-## Class Diagram
-
-<!-- OPTIONAL. Only when the project asks for one (Capstone 2 onward). Export the diagram as a PNG into the
-     images folder and keep the line below. If your project has no class diagram, delete this whole section,
-     heading included. -->
-
-![Class Diagram](images/class-diagram.png)
 
 ## Features
 
@@ -134,9 +127,9 @@ As a user, I want to search by vendor so that I can find specific transactions.
      Optional GIF: LICEcap (free, Windows and Mac, <https://www.cockos.com/licecap/>) records a region of the
      screen straight to a .gif. Keep it under 10 seconds and under 10 MB, save it into `images`. -->
 
-![Main menu](images/menu.png)
+![Main menu](images/image.menu.png)
 
-![One feature in action](images/feature.png)
+![One feature in action](images/image.report.png)
 
 ## A piece of code I am proud of
 
