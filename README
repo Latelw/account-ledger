@@ -1,13 +1,9 @@
-# Project Title
+Account Ledger Capstone #1
 
-<!-- One sentence under the title: what the app is, for whom.
-     Example: A console app that keeps a store's inventory in a csv file and lets a clerk search it. -->
-     A account ledger app that keeps transaction data in a csv file and allows the user to filter their search.
+A Ledger that documents transactions for the user and displays saved information.
 
 ## Description of the Project
 
-<!-- Three to five sentences. What the application does, who uses it, what problem it solves.
-     Write it for someone who has never seen the workbook: a recruiter, a classmate, you in six months. -->
      This application is made for a user to store transaction history. It primarily documents transactions onto a file,
      and recovers the information stored in the csv file. It also gives the user access to the information via specific
      filters to allow them to see the transactions in a specific time frame.
@@ -52,17 +48,6 @@
 3. Wait for IntelliJ to finish indexing (progress bar at the bottom).
 4. Open `src/main/java/com/pluralsight/YourMainClassName.java`. <!-- replace YourMainClassName with the class that has main -->
 5. Right-click inside the file and choose Run 'YourMainClassName.main()'.
-
-### Data and configuration
-
-<!-- OPTIONAL. Anything the program needs that is not code: data files and where they must sit, files the
-     program creates, a database script to run first, a settings file to edit (connection, port).
-     If there is nothing, delete this subsection, heading included.
-     Example:
-     - `inventory.csv` sits at the project root, next to `pom.xml`. The program reads it at start.
-     - `logs.txt` is created by the program at the project root on the first run. -->
-
--
 
 ## Technologies Used
 
